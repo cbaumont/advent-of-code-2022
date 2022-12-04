@@ -1,10 +1,4 @@
-const fs = require('node:fs');
-const readline = require('node:readline');
-
-const rl = readline.createInterface({
-    input: fs.createReadStream('day1/day1_input.txt'),
-    crlfDelay: Infinity,
-});
+import { rl as readline } from "../index.js";
 
 let totalCalories = 0;
 let maxCalories = 0;
@@ -34,6 +28,6 @@ const topThreeElves = (() => {
     console.log(`Top 3 elves are carrying in total ${sumTopCalories} calories.`);
 })
 
-rl.on('line', (line) => {
+readline('day1/day1_input.txt').on('line', (line) => {
     line !== '' ? sumCalories(parseInt(line)) : checkMaxCalories();
 });
