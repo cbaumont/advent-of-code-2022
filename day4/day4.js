@@ -1,6 +1,7 @@
 import { fileToArray as fileToArray } from "../index.js";
 
-let countPairs = 0;
+let containedPairs = 0;
+let overlappingPairs = 0;
 
 function isContainedPair(pairs) {
     const pairsArray = pairs.split(',');
@@ -8,6 +9,17 @@ function isContainedPair(pairs) {
     const secondPair = extractNumbersFromPair(pairsArray.pop());
     if ((secondPair[0] >= firstPair[0] && secondPair[1] <= firstPair[1]) ||
         (firstPair[0] >= secondPair[0] && firstPair[1] <= secondPair[1])) {
+        return true;
+    }
+    return false;
+}
+
+function isOverlappingPair(pairs) {
+    const pairsArray = pairs.split(',');
+    const firstPair = extractNumbersFromPair(pairsArray.shift());
+    const secondPair = extractNumbersFromPair(pairsArray.pop());
+    if ((firstPair[1] >= secondPair[0]) &&
+        (secondPair[1] >= firstPair[0])) {
         return true;
     }
     return false;
@@ -23,10 +35,14 @@ function extractNumbersFromPair(pair) {
 fileToArray('day4/day4_input.txt').then(array => {
     array.forEach(element => {
         if (isContainedPair(element)) {
-            countPairs += 1;
+            containedPairs += 1;
+        }
+        if (isOverlappingPair(element)) {
+            overlappingPairs += 1;
         }
     });
-    console.log(`Number of pairs where one fully contain the other: ${countPairs}`);
+    console.log(`Number of pairs where one fully contain the other: ${containedPairs}`);
+    console.log(`Number of overlapping pairs: ${overlappingPairs}`);
 }).catch(error => {
     console.error(error);
 });
